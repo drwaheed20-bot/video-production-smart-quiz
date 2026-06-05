@@ -32,6 +32,6 @@ const base=[
 ['ما المبدأ الأفضل عند إضافة الموسيقى الخلفية؟',['ألا تطغى على صوت الشرح','أن تكون أعلى من صوت المتحدث','أن تكون بلا ترخيص','أن تستمر بأعلى مستوى'],0,'الموسيقى الداعمة ينبغي أن تخدم الجو العام دون إعاقة الفهم.'],
 ['ما وظيفة التغذية الراجعة داخل الفيديو التفاعلي؟',['إخبار الطالب بصحة استجابته وتوجيهه','إلغاء التعلم','زيادة التشتيت','منع المحاولة'],0,'التغذية الراجعة تساعد الطالب على تصحيح الفهم فورًا.']
 ];
-function add(i){let b=base[i%base.length],topic=topics[i%topics.length];QUESTIONS.push({id:'Q'+String(i+1).padStart(3,'0'),source:i<215?'original':'new',sourceNo:i+1,type:b[1].length==2?'tf':'mc',topic:topic,difficulty:1+(i%3),question:b[0]+(i>=base.length?' - صيغة مراجعة '+(Math.floor(i/base.length)+1):''),options:b[1],answer:b[2],feedback:b[3],hint:'راجع المفهوم الرئيس في محور: '+topic});}
+function add(i){let b=base[i%base.length],topic=topics[i%topics.length];QUESTIONS.push({id:'Q'+String(i+1).padStart(3,'0'),source:i<215?'original':'new',sourceNo:i+1,type:b[1].length==2?'tf':'mc',topic:topic,difficulty:1+(i%3),question:b[0],options:b[1],answer:b[2],feedback:b[3],hint:'راجع المفهوم الرئيس في محور: '+topic});}
 for(let i=0;i<300;i++)add(i);
 })();
