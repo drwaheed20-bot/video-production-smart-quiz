@@ -1,7 +1,7 @@
 {
   "enabled": true,
-  "title": "Video Production Smart Quiz",
-  "subtitle": "Adaptive review quiz with immediate feedback",
+  "title": "\u0627\u062e\u062a\u0628\u0627\u0631 \u062a\u0641\u0627\u0639\u0644\u064a \u0630\u0643\u064a \u0644\u0645\u0631\u0627\u062c\u0639\u0629 \u0645\u0642\u0631\u0631 \u0625\u0646\u062a\u0627\u062c \u0628\u0631\u0627\u0645\u062c \u0627\u0644\u0641\u064a\u062f\u064a\u0648",
+  "subtitle": "\u0628\u0646\u0643 \u0623\u0633\u0626\u0644\u0629 \u0639\u0631\u0628\u064a \u062a\u0643\u064a\u0641\u064a \u0628\u062a\u063a\u0630\u064a\u0629 \u0631\u0627\u062c\u0639\u0629 \u0641\u0648\u0631\u064a\u0629",
   "startAt": "",
   "endAt": "",
   "durationMinutes": 45,
@@ -14,6 +14,6 @@
   "requireFullscreen": false,
   "preventCopyAndPrint": true,
   "showWatermark": true,
-  "teacherName": "Dr. Mohamed Waheed",
-  "lastUpdated": "2026-06-05T10:26:16Z"
+  "teacherName": "\u062f. \u0645\u062d\u0645\u062f \u0648\u062d\u064a\u062f \u0633\u0644\u064a\u0645\u0627\u0646",
+  "lastUpdated": "2026-06-05T12:10:00Z"
 }
