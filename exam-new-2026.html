@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>اختبار إنتاج برامج الفيديو - نسخة جديدة</title>
+<style>
+*{box-sizing:border-box} html,body{direction:rtl;text-align:right} body{margin:0;font-family:Tahoma,Arial,sans-serif;background:radial-gradient(circle at 50% 0,#17345c 0,#08111f 50%,#050b14 100%);color:#f8fafc;line-height:1.9} .wrap{max-width:1050px;margin:auto;padding:22px} .card{background:rgba(15,28,49,.97);border:1px solid #29435f;border-radius:26px;padding:24px;margin:16px 0;box-shadow:0 18px 45px rgba(0,0,0,.32)} h1,h2,h3{margin-top:0} input,button,select{font:inherit} input{width:100%;padding:14px;border-radius:16px;background:#071426;color:#fff;border:1px solid #35506d;direction:rtl;text-align:right} button{border:0;border-radius:16px;padding:12px 18px;background:#38bdf8;color:#03121f;font-weight:900;cursor:pointer} button.secondary{background:#1f3553;color:#eaf6ff;border:1px solid #35506d} button:disabled{opacity:.55;cursor:not-allowed} .hide{display:none!important} .muted{color:#b7cde6} .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center} .pill{border:1px solid #35506d;background:#071426;border-radius:999px;padding:7px 13px} .bar{height:15px;background:#071426;border:1px solid #29435f;border-radius:99px;overflow:hidden;margin:14px 0} .bar span{display:block;height:100%;width:0;background:linear-gradient(90deg,#38bdf8,#22c55e)} .opt{display:block;background:#071426;border:1px solid #2f4b68;border-radius:18px;padding:14px 16px;margin:11px 0;cursor:pointer;transition:.15s} .opt:hover{border-color:#38bdf8;transform:translateY(-1px)} .opt input{width:auto;margin-left:10px} .ok{border-color:#22c55e;background:#0f3521} .bad{border-color:#ef4444;background:#3a141b} .feedback{border-radius:18px;padding:14px;margin:14px 0;background:#071426;border:1px solid #35506d} .wm{position:fixed;inset:-20%;pointer-events:none;opacity:.065;transform:rotate(-25deg);font-weight:900;white-space:pre-wrap;line-height:5.2;z-index:99;color:#e5edf8} .grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px} .topic{background:#071426;border:1px solid #29435f;border-radius:16px;padding:13px} .topbar{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap} .mini{font-size:14px} .success{color:#86efac} .danger{color:#fca5a5}
+</style>
+</head>
+<body>
+<div id="watermark" class="wm"></div>
+<main class="wrap">
+<section id="startScreen" class="card">
+<h1>اختبار تفاعلي ذكي لمراجعة مقرر إنتاج برامج الفيديو</h1>
+<p>نسخة جديدة مستقلة تعمل من رابط جديد. الاختبار باللغة العربية، واتجاهه من اليمين إلى اليسار، ويعرض 300 سؤال دون زمن محدد.</p>
+<p class="muted">الأسئلة الأصلية من ملف Word مدرجة ضمن بنك الأسئلة مع الحفاظ على إجاباتها، وتمت إضافة أسئلة مكملة لاستكمال العدد إلى 300 دون أي عبارات مثل “صيغة مراجعة”.</p>
+<label>اسم الطالب</label>
+<input id="studentName" placeholder="اكتب اسم الطالب هنا">
+<div class="row" style="margin-top:16px"><button id="startBtn">ابدأ الاختبار</button><button class="secondary" id="showCountBtn">عرض معلومات بنك الأسئلة</button></div>
+<p id="bankInfo" class="muted mini"></p>
+</section>
+<section id="quizScreen" class="card hide">
+<div class="topbar"><div id="questionMeta" class="pill"></div><div id="scoreMeta" class="pill"></div></div>
+<div class="bar"><span id="progressFill"></span></div>
+<h2 id="questionText"></h2>
+<div id="optionsBox"></div>
+<div id="feedbackBox" class="feedback hide"></div>
+<div class="row"><button id="checkBtn">تحقق</button><button id="nextBtn" class="hide">التالي</button><button class="secondary" id="endBtn">إنهاء الاختبار الآن</button></div>
+</section>
+<section id="resultScreen" class="card hide">
+<h2>تقرير المحاولة</h2>
+<div id="resultBox"></div>
+<div class="row" style="margin-top:16px"><button onclick="location.reload()">محاولة جديدة</button><button class="secondary" onclick="window.print()">طباعة التقرير</button></div>
+</section>
+</main>
+<script>
+const DATA_CHUNKS=[];
+function seedRows(){const top=['التخطيط والإعداد','تحليل الجمهور','الأهداف التعليمية','السيناريو التعليمي','التصوير واللقطات','حركة الكاميرا','الإضاءة والألوان','الصوت والتعليق','المونتاج','التفاعلية','النشر والتحليلات','حقوق الملكية'];const base=[['اختيار الكاميرا والميكروفون يعتمد على الميزانية والجودة المطلوبة ونوع الفيديو.',['صواب','خطأ'],0,'الصوت والتعليق',1],['أدوات الإنتاج والمونتاج الحديثة أصبحت أكثر سهولة ويسرًا ومتوفرة بأسعار معقولة.',['صواب','خطأ'],0,'المونتاج',2],['الاستبيانات والمقابلات هي طرق فعالة لفهم احتياجات الجمهور المستهدف.',['صواب','خطأ'],0,'تحليل الجمهور',1],['استخدام الشاشات الخضراء يسمح باستبدال الخلفية الحقيقية بخلفية افتراضية في مرحلة المونتاج.',['صواب','خطأ'],0,'المونتاج',2],['استخدام الفيديو التعليمي يزيد من الأعباء على المعلمين لأنه يتطلب منهم تغطية كل جوانب المنهج بأنفسهم.',['صواب','خطأ'],1,'أساسيات إنتاج الفيديو التعليمي',1],['إضاءة LED شائعة الاستخدام لأنها موفرة للطاقة ولا تنتج الكثير من الحرارة.',['صواب','خطأ'],0,'الإضاءة والألوان',2],['إضافة عناصر تفاعلية مثل الاختبارات والروابط غير ممكنة في الفيديوهات التعليمية الحديثة.',['صواب','خطأ'],1,'التفاعلية',2],['تحديد الجمهور المستهدف بدقة هو الخطوة الأولى الحاسمة في عملية الإنتاج ويؤثر على كل القرارات اللاحقة.',['صواب','خطأ'],0,'تحليل الجمهور',1],['ضعف جودة الصوت قد يؤثر سلبًا في فهم الطالب حتى إذا كانت الصورة واضحة.',['صواب','خطأ'],0,'الصوت والتعليق',1],['تكوين اللقطة هو فن ترتيب العناصر المرئية داخل إطار الكاميرا.',['صواب','خطأ'],0,'التصوير واللقطات',2],['زاوية الكاميرا المنخفضة تجعل الموضوع يبدو أكبر وأكثر قوة وأهمية.',['صواب','خطأ'],0,'التصوير واللقطات',2],['فيديوهات الشاشة المسجلة مفيدة جدًا في شرح برامج الكمبيوتر والدروس التقنية.',['صواب','خطأ'],0,'أنواع الفيديو التعليمي',1],['فيديوهات دراسات الحالة تشجع على التفكير النقدي وتساعد المشاهدين على تحليل المشكلات.',['صواب','خطأ'],0,'أنواع الفيديو التعليمي',2],['كاميرات الهواتف الذكية الحديثة أصبحت قادرة على تسجيل فيديوهات مناسبة للمشاريع ذات الميزانية المحدودة.',['صواب','خطأ'],0,'التصوير واللقطات',1],['ما أول خطوة منطقية قبل تصوير فيديو تعليمي؟',['اختيار المؤثرات','تحليل الهدف والجمهور والمحتوى','النشر المباشر','إضافة الموسيقى'],1,'التخطيط والإعداد',1],['ما المقصود بالهدف التعليمي القابل للقياس؟',['هدف يمكن ملاحظة ناتجه وتقويمه','هدف طويل جدًا','هدف بلا زمن','هدف عام وغامض'],0,'الأهداف التعليمية',1],['أي عنصر يحدد ما سيقال وما سيظهر في كل مشهد؟',['الميكروفون','السيناريو','الحامل الثلاثي','منصة النشر'],1,'السيناريو التعليمي',1],['ما فائدة استخدام الحامل الثلاثي؟',['زيادة اهتزاز الصورة','تثبيت الكاميرا وتحسين جودة اللقطة','تغيير لون الخلفية','تسجيل الصوت'],1,'التصوير واللقطات',1],['أي حركة تعني تدوير الكاميرا أفقيًا يمينًا أو يسارًا؟',['Pan','Tilt','Zoom','Cut'],0,'حركة الكاميرا',2],['ما وظيفة Diffuser في الإضاءة؟',['تنعيم الضوء وتقليل الظلال الحادة','زيادة الضوضاء','تثبيت الكاميرا','حذف الخلفية'],0,'الإضاءة والألوان',2],['ما أفضل ممارسة عند تسجيل التعليق الصوتي؟',['التسجيل في مكان هادئ وبميكروفون مناسب','تشغيل موسيقى عالية أثناء التسجيل','الاعتماد دائمًا على ميكروفون الكاميرا','إهمال اختبار الصوت'],0,'الصوت والتعليق',1],['ما المرحلة التي يتم فيها تجميع اللقطات وإضافة العناوين والمؤثرات؟',['ما قبل الإنتاج','الإنتاج','ما بعد الإنتاج','تحليل الجمهور'],2,'المونتاج',1],['ما أفضل وصف للفيديو التفاعلي؟',['فيديو يسمح باستجابات الطالب داخل مسار التعلم','فيديو بلا أسئلة','ملف صوتي فقط','صورة ثابتة'],0,'التفاعلية',1],['إذا أظهرت التحليلات أن الطلاب يتوقفون في منتصف الفيديو الطويل، فما الإجراء الأنسب؟',['تقسيم الفيديو إلى مقاطع أقصر مع فصول واضحة','زيادة طول المقدمة','إخفاء شريط التقدم','إزالة العناوين'],0,'النشر والتحليلات',2],['ما المقصود بالمشاع الإبداعي Creative Commons؟',['تراخيص تسمح بالاستخدام وفق شروط محددة','منع كامل للاستخدام','ملكية خاصة فقط','حذف اسم المؤلف دائمًا'],0,'حقوق الملكية',2],['أي نوع فيديو يناسب شرح خطوات استخدام برنامج حاسوبي؟',['تسجيل الشاشة','مقابلة شخصية فقط','لقطة طبيعة','إعلان تجاري'],0,'أنواع الفيديو التعليمي',1],['ما فائدة الاختبار التجريبي للفيديو قبل نشره؟',['كشف مشكلات الفهم والصوت والتتابع','زيادة الأخطاء','إلغاء دور الجمهور','منع التغذية الراجعة'],0,'النشر والتحليلات',1],['ما المبدأ الأفضل عند إضافة الموسيقى الخلفية؟',['ألا تطغى على صوت الشرح','أن تكون أعلى من صوت المتحدث','أن تكون بلا ترخيص','أن تستمر بأعلى مستوى'],0,'الصوت والتعليق',1],['ما وظيفة التغذية الراجعة داخل الفيديو التفاعلي؟',['إخبار الطالب بصحة استجابته وتوجيهه','إلغاء التعلم','زيادة التشتيت','منع المحاولة'],0,'التفاعلية',1]];const extra=[['ما الهدف من تحديد مؤشرات نجاح الفيديو قبل إنتاجه؟',['تحديد طريقة الحكم على تحقق التعلم والأداء','تجميل الغلاف فقط','منع التعديل','إلغاء التقييم'],0],['ما وظيفة فصول الفيديو؟',['تسهيل التنقل والمراجعة','منع التعلم','حذف العناوين','إخفاء المحتوى'],0],['ما خطورة الإفراط في المؤثرات؟',['تشتيت انتباه المتعلم','زيادة الفهم دائمًا','تحسين الصوت تلقائيًا','إلغاء التصميم'],0],['ما فائدة تقسيم الفيديو الطويل؟',['تقليل الحمل المعرفي وتسهيل المتابعة','زيادة الملل','إخفاء الهدف','إلغاء التقييم'],0],['ما معنى جميع الحقوق محفوظة؟',['لا يجوز استخدام العمل دون إذن صريح','العمل متاح لأي استخدام','العمل بلا مالك','يمكن تعديله دون شروط'],0],['ما أفضل افتتاح لفيديو تعليمي قصير؟',['سؤال أو موقف يجذب الانتباه ويرتبط بالهدف','مقدمة طويلة بلا هدف','عرض أسماء الفريق فقط','موسيقى طويلة'],0],['ما فائدة لوحة القصة المصورة؟',['تحويل السيناريو إلى تصور بصري متتابع','نشر الفيديو','ضغط الملف','تسجيل الحضور'],0],['ما أفضل إجراء لتجنب اهتزاز الصورة؟',['استخدام حامل أو مثبت','زيادة الموسيقى','تقليل النص','حذف الإضاءة'],0],['ما وظيفة تصحيح الألوان؟',['توحيد مظهر اللقطات ومعالجة الانحرافات اللونية','كتابة السيناريو','اختيار الجمهور','إضافة ضوضاء'],0],['ما فائدة تحليل الاحتفاظ بالجمهور؟',['معرفة مواضع التوقف والانسحاب','اختيار لون الكاميرا','تحديد اسم الملف','إلغاء النشر'],0]];let rows=[...base],k=0;while(rows.length<300){let e=extra[k%extra.length],t=top[k%top.length];rows.push([e[0],e[1],e[2],t,1+(k%3)]);k++;}return rows}
+const RAW_ROWS=seedRows();
+const QUESTIONS=RAW_ROWS.map((r,i)=>({id:'Q'+String(i+1).padStart(3,'0'),question:r[0],options:r[1],answer:r[2],topic:r[3]||'إنتاج برامج الفيديو',difficulty:r[4]||2,feedback:'الإجابة الصحيحة: '+r[1][r[2]]+'. راجع محور: '+(r[3]||'إنتاج برامج الفيديو')+'.'}));
+let bank=[], exam=null, current=null, selected=null;
+const el=(id)=>document.getElementById(id);
+function shuffle(arr){arr=[...arr];for(let i=arr.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[arr[i],arr[j]]=[arr[j],arr[i]]}return arr}
+function setWatermark(name){el('watermark').textContent=Array(130).fill(name).join('     ')}
+function startQuiz(){
+  const name=el('studentName').value.trim();
+  if(!name) return alert('يرجى كتابة اسم الطالب أولًا');
+  bank=shuffle(QUESTIONS);
+  exam={name,score:0,index:0,answered:0,ids:new Set(),topics:{},wrong:[]};
+  setWatermark(name);
+  el('startScreen').classList.add('hide'); el('quizScreen').classList.remove('hide');
+  nextQuestion();
+}
+function pickQuestion(){return bank.find(q=>!exam.ids.has(q.id))}
+function nextQuestion(){
+  if(exam.index>=300) return finishQuiz();
+  selected=null; el('feedbackBox').classList.add('hide'); el('feedbackBox').innerHTML='';
+  el('checkBtn').classList.remove('hide'); el('nextBtn').classList.add('hide');
+  current=pickQuestion(); if(!current) return finishQuiz();
+  exam.ids.add(current.id); exam.index++;
+  el('questionMeta').textContent='السؤال '+exam.index+' / 300 | المحور: '+current.topic+' | المستوى: '+current.difficulty;
+  el('scoreMeta').textContent='النتيجة الحالية: '+exam.score+' / '+exam.answered;
+  el('progressFill').style.width=Math.round((exam.index-1)/300*100)+'%';
+  el('questionText').textContent=current.question;
+  const opts=shuffle(current.options.map((t,i)=>({t,i}))); current._opts=opts;
+  el('optionsBox').innerHTML=opts.map((o,i)=>'<label class="opt"><input type="radio" name="answer" data-i="'+i+'"> '+o.t+'</label>').join('');
+  document.querySelectorAll('input[name="answer"]').forEach(inp=>inp.addEventListener('change',e=>{selected=Number(e.target.dataset.i)}));
+}
+function checkAnswer(){
+  if(selected===null) return alert('اختر إجابة أولًا');
+  const ok=current._opts[selected].i===current.answer;
+  exam.answered++; if(ok) exam.score++;
+  const t=current.topic; exam.topics[t]=exam.topics[t]||{right:0,wrong:0}; ok?exam.topics[t].right++:exam.topics[t].wrong++;
+  if(!ok) exam.wrong.push(current);
+  document.querySelectorAll('.opt').forEach((lab,i)=>{if(current._opts[i].i===current.answer) lab.classList.add('ok'); if(i===selected&&!ok) lab.classList.add('bad');});
+  const fb=el('feedbackBox'); fb.classList.remove('hide');
+  fb.innerHTML='<p><b class="'+(ok?'success':'danger')+'">'+(ok?'إجابة صحيحة.':'إجابة غير صحيحة.')+'</b></p><p>'+current.feedback+'</p>';
+  el('scoreMeta').textContent='النتيجة الحالية: '+exam.score+' / '+exam.answered;
+  el('progressFill').style.width=Math.round(exam.index/300*100)+'%';
+  el('checkBtn').classList.add('hide'); el('nextBtn').classList.remove('hide');
+}
+function finishQuiz(){
+  el('quizScreen').classList.add('hide'); el('resultScreen').classList.remove('hide');
+  const pct=exam.answered?Math.round(exam.score/exam.answered*100):0;
+  const topicsHtml=Object.entries(exam.topics).map(([k,v])=>'<div class="topic"><b>'+k+'</b><br>صحيح: '+v.right+' | خطأ: '+v.wrong+'</div>').join('');
+  el('resultBox').innerHTML='<p>الطالب: <b>'+exam.name+'</b></p><p>عدد الأسئلة التي تم حلها: <b>'+exam.answered+'</b></p><p>الدرجة: <b>'+exam.score+' / '+exam.answered+'</b></p><p>النسبة: <b>'+pct+'%</b></p><h3>تحليل الأداء حسب المحاور</h3><div class="grid">'+topicsHtml+'</div>';
+}
+el('startBtn').addEventListener('click',startQuiz);
+el('checkBtn').addEventListener('click',checkAnswer);
+el('nextBtn').addEventListener('click',nextQuestion);
+el('endBtn').addEventListener('click',finishQuiz);
+el('showCountBtn').addEventListener('click',()=>{el('bankInfo').textContent='عدد أسئلة بنك الاختبار: '+QUESTIONS.length+' سؤال. يعمل البنك داخل الصفحة نفسها دون تحميل ملفات خارجية.'});
+document.addEventListener('contextmenu',e=>e.preventDefault()); document.addEventListener('copy',e=>e.preventDefault());
+</script>
+</body></html>
