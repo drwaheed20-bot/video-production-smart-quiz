@@ -1,5 +1,5 @@
 {
-  "enabled": false,
+  "enabled": true,
   "title": "Arabic Video Production Quiz",
   "subtitle": "Arabic adaptive question bank",
   "startAt": "",
@@ -15,5 +15,5 @@
   "preventCopyAndPrint": true,
   "showWatermark": true,
   "teacherName": "Dr. Mohamed Waheed",
-  "lastUpdated": "2026-06-05T12:29:51.190Z"
+  "lastUpdated": "2026-06-05T12:33:49.765Z"
 }
