@@ -1,0 +1,19 @@
+{
+  "enabled": true,
+  "title": "Video Production Smart Quiz",
+  "subtitle": "Adaptive review quiz with immediate feedback",
+  "startAt": "",
+  "endAt": "",
+  "durationMinutes": 45,
+  "questionCount": 60,
+  "maxAttempts": 1,
+  "adaptive": true,
+  "showImmediateFeedback": true,
+  "shuffleQuestions": true,
+  "shuffleOptions": true,
+  "requireFullscreen": false,
+  "preventCopyAndPrint": true,
+  "showWatermark": true,
+  "teacherName": "Dr. Mohamed Waheed",
+  "lastUpdated": "2026-06-05T10:26:16Z"
+}
